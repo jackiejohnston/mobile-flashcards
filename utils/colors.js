@@ -1,8 +1,0 @@
-export const primaryColorDark   = "#0097A7"
-export const primaryColor       = "#00BCD4"
-export const primaryColorLight  = "#B2EBF2"
-export const primaryColorText   = "#FFFFFF"
-export const accentColor        = "#FF5722"
-export const primaryTextColor   = "#212121"
-export const secondaryTextColor = "#757575"
-export const dividerColor       = "#BDBDBD"
