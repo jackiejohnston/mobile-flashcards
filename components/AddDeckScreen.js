@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text, TextInput, TouchableHighlight } from 'react-native'
-import { StackNavigator } from 'react-navigation'
-import { palette, asyncStore } from '../utils/constants'
+import { palette, asyncStore, asyncStore2 } from '../utils/constants'
 import styled from 'styled-components/native'
 import { NavigationActions } from 'react-navigation'
 import { AsyncStorage } from 'react-native'
@@ -11,7 +10,7 @@ class AddDeckScreen extends React.Component {
   state = { text: "" }
 
   static navigationOptions = {
-    title: 'New Deck',
+    title: 'Add Flashcard Deck',
   }
 
   submitEntry (key, entry) {
@@ -25,7 +24,10 @@ class AddDeckScreen extends React.Component {
     const entry = { title: key }
     this.setState({text: ""})
     this.submitEntry(key, entry)
-    this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'Home'}))
+    AsyncStorage.mergeItem(asyncStore2, JSON.stringify({
+      refreshHome: true
+    }))
+    this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'Home', params: { refresh: true }}))
   }
 
   render() {
@@ -48,7 +50,6 @@ class AddDeckScreen extends React.Component {
 const StyledView = styled.View`
   flex: 1;
   background-color: ${palette.primaryColorText};
-  justify-content: center;
   padding: 20px;
 `
 

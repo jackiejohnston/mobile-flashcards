@@ -6,6 +6,7 @@ import { palette } from './utils/constants'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import HomeScreen from './components/HomeScreen'
 import AddDeckScreen from './components/AddDeckScreen'
+import DeckDetailScreen from './components/DeckDetailScreen'
 import { Ionicons } from '@expo/vector-icons'
 
 const Tabs = TabNavigator({
@@ -24,9 +25,6 @@ const Tabs = TabNavigator({
     },
   },
 }, {
-  // navigationOptions: {
-  //   header: null
-  // },
   tabBarOptions: {
     activeTintColor: Platform.OS === 'ios' ? palette.primaryColorDark : palette.primaryColorText,
     style: {
@@ -50,6 +48,9 @@ const MainNavigator = StackNavigator({
   AddDeck: {
     screen: AddDeckScreen
   },
+  DeckDetail: {
+    screen: DeckDetailScreen
+  },
 })
 
 export default class App extends React.Component {
@@ -59,7 +60,7 @@ export default class App extends React.Component {
         <View style={{ backgroundColor: palette.primaryColorDark, height: Constants.statusBarHeight }}>
           <StatusBar translucent backgroundColor={ palette.primaryColorDark } barStyle="light-content" networkActivityIndicatorVisible />
         </View>
-        <MainNavigator />
+        <MainNavigator something="true" />
       </View>
     )
   }

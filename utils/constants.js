@@ -1,4 +1,5 @@
-export const asyncStore = "12348"
+export const asyncStore = "Decks1"
+export const asyncStore2 = "Params1"
 
 export const palette = {
   primaryColorDark   : "#0097A7",

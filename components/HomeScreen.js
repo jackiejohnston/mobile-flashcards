@@ -1,14 +1,15 @@
 import React from 'react'
 import { ScrollView, TouchableHighlight, View, Text, Button } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-import { palette, asyncStore } from '../utils/constants'
+import { palette, asyncStore, asyncStore2 } from '../utils/constants'
 import styled from 'styled-components/native'
 import { AsyncStorage } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 class HomeScreen extends React.Component {
 
   static navigationOptions = {
-    title: 'Decks',
+    title: 'Flashcards',
   }
 
   state = {
@@ -49,17 +50,32 @@ class HomeScreen extends React.Component {
     })
   }
 
+  checkForRefresh() {
+    AsyncStorage.getItem(asyncStore2, (err, result) => {
+      err
+      ? console.log(err)
+      : result === null
+        ? console.log("Nothing in asyncStore2")
+        : JSON.parse(result).refreshHome
+          ? this.getDecks()
+          : console.log("No refresh necessary")
+    })
+  }
+
   componentWillMount() {
     this.getDecks()
   }
 
   render() {
-    this.getDecks() // This is basically a forced update
-    const { navigate } = this.props.navigation;
+    this.checkForRefresh()
+    const { navigate } = this.props.navigation
     return (
       <StyledScrollView>
         {Object.entries(this.state).map((deck, i) =>
-          <StyledTouchableHighlight key={ i } onPress={() => {console.log(deck[0])}}>
+          <StyledTouchableHighlight key={ i } onPress={() => {
+            this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'DeckDetail', params: { title: deck[0], cards: deck[1] }}))
+          }}>
+
             <StyledView>
               <StyledMdText>{ deck[0] }</StyledMdText>
               { deck[1].questions
