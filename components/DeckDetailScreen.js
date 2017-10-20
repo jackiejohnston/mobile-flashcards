@@ -8,6 +8,7 @@ class DeckDetailScreen extends React.Component {
 
   static navigationOptions = {
     title: 'Deck',
+    headerTintColor: palette.primaryColorDark,
   }
 
   render() {
@@ -20,12 +21,17 @@ class DeckDetailScreen extends React.Component {
             ? <StyledSmText>{ cards.questions.length } cards</StyledSmText>
             : <StyledSmText>0 cards</StyledSmText>
           }
-          <StyledTouchableHighlight onPress={console.log("add card")}>
+          <StyledTouchableHighlight onPress={() => {
+            this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'AddCard', params: { title: title }}))
+          }}>
             <StyledBtnText>Add Card</StyledBtnText>
           </StyledTouchableHighlight>
-          <StyledTouchableHighlight2 onPress={console.log("start quiz")}>
-            <StyledBtnText>Start Quiz</StyledBtnText>
-          </StyledTouchableHighlight2>
+          { cards.questions
+            ? <StyledTouchableHighlight2 onPress={() => {console.log("start quiz")}}>
+               <StyledBtnText>Start Quiz</StyledBtnText>
+              </StyledTouchableHighlight2>
+            : <Text></Text>
+          }
         </View>
       </StyledView>
     )

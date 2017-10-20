@@ -5,12 +5,15 @@ import styled from 'styled-components/native'
 import { NavigationActions } from 'react-navigation'
 import { AsyncStorage } from 'react-native'
 
-class AddDeckScreen extends React.Component {
-
-  state = { title: "" }
+class AddQuestionScreen extends React.Component {
+  state = {
+    title: "",
+    question: "",
+    answer: ""
+  }
 
   static navigationOptions = {
-    title: 'Add Flashcard Deck',
+    title: 'Add Flashcard',
     headerTintColor: palette.primaryColorDark,
   }
 
@@ -22,8 +25,8 @@ class AddDeckScreen extends React.Component {
 
   submit = () => {
     const key = this.state.title
-    const entry = { title: key }
-    this.setState({title: ""})
+    const entry = { questions: [{ question: this.state.question, answer: this.state.answer}] }
+    this.setState({title: "", question: "", answer: ""})
     this.submitEntry(key, entry)
     AsyncStorage.mergeItem(asyncStore2, JSON.stringify({
       refreshHome: true
@@ -31,14 +34,24 @@ class AddDeckScreen extends React.Component {
     this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'Home', params: { refresh: true }}))
   }
 
+  componentWillMount() {
+    this.setState({title: this.props.navigation.state.params.title})
+  }
+
   render() {
     return (
       <StyledView>
-        <StyledText>What is the title of your new deck?</StyledText>
+        <StyledText>Add Card to {this.state.title} Flashcards</StyledText>
+        <StyledSmText>Question:</StyledSmText>
         <StyledTextInput
           autofocus
-          onChangeText={(text) => this.setState({title: text})}
-          value={this.state.title}
+          onChangeText={(text) => {this.setState({question: text})}}
+          value={this.state.question}
+        />
+        <StyledSmText>Answer:</StyledSmText>
+        <StyledTextInput
+          onChangeText={(text) => {this.setState({answer: text})}}
+          value={this.state.answer}
         />
         <StyledTouchableHighlight onPress={this.submit}>
           <StyledBtnText>Submit</StyledBtnText>
@@ -46,7 +59,9 @@ class AddDeckScreen extends React.Component {
       </StyledView>
     )
   }
+
 }
+
 
 const StyledView = styled.View`
   flex: 1;
@@ -64,7 +79,7 @@ const StyledTextInput = styled.TextInput`
   width: 100%;
   border: 1px solid ${palette.dividerColor};
   height: 45px;
-  margin-top: 20px;
+  margin-top: 5px;
 `
 
 const StyledTouchableHighlight = styled.TouchableHighlight`
@@ -82,4 +97,10 @@ const StyledBtnText = styled.Text`
   font-weight: bold;
 `
 
-export default AddDeckScreen
+const StyledSmText = styled.Text`
+  color: ${palette.secondaryTextColor};
+  font-size: 14px;
+  margin-top: 20px;
+`
+
+export default AddQuestionScreen

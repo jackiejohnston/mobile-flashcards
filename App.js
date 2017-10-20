@@ -7,6 +7,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import HomeScreen from './components/HomeScreen'
 import AddDeckScreen from './components/AddDeckScreen'
 import DeckDetailScreen from './components/DeckDetailScreen'
+import AddQuestionScreen from './components/AddQuestionScreen'
 import { Ionicons } from '@expo/vector-icons'
 
 const Tabs = TabNavigator({
@@ -50,6 +51,9 @@ const MainNavigator = StackNavigator({
   },
   DeckDetail: {
     screen: DeckDetailScreen
+  },
+  AddCard: {
+    screen: AddQuestionScreen
   },
 })
 

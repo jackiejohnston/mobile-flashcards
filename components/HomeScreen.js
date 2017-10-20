@@ -10,6 +10,7 @@ class HomeScreen extends React.Component {
 
   static navigationOptions = {
     title: 'Flashcards',
+    headerTintColor: palette.primaryColorDark,
   }
 
   state = {
@@ -68,6 +69,7 @@ class HomeScreen extends React.Component {
 
   render() {
     this.checkForRefresh()
+    // console.log(this.state)
     const { navigate } = this.props.navigation
     return (
       <StyledScrollView>
