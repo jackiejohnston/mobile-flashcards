@@ -2,7 +2,7 @@
 
 This is an app built with [React Native](https://facebook.github.io/react-native/) that allows users to create decks of flashcards and quiz themselves.
 
-## Step 1
+## Install and Run
 If you don't already have [Yarn](https://yarnpkg.com/en/) package installer, install it with the [Homebrew](https://docs.brew.sh/Installation.html) package manager:
 
 ```
@@ -14,8 +14,7 @@ You'll also need [Create React Native App](https://github.com/react-community/cr
 $  yarn global add create-react-native-app
 ```
 
-## Step 2
-Download, install and run this app in [Expo](https://expo.io):
+Next, download, install and run this app in [Expo](https://expo.io):
 
 ```
 $  git clone git@github.com:jackiejohnston/mobile-flashcards.git
