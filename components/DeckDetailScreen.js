@@ -27,7 +27,9 @@ class DeckDetailScreen extends React.Component {
             <StyledBtnText>Add Card</StyledBtnText>
           </StyledTouchableHighlight>
           { cards.questions
-            ? <StyledTouchableHighlight2 onPress={() => {console.log("start quiz")}}>
+            ? <StyledTouchableHighlight2 onPress={() => {
+            this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'Quiz', params: { title: title }}))
+          }}>
                <StyledBtnText>Start Quiz</StyledBtnText>
               </StyledTouchableHighlight2>
             : <Text></Text>

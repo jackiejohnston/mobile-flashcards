@@ -8,6 +8,7 @@ import HomeScreen from './components/HomeScreen'
 import AddDeckScreen from './components/AddDeckScreen'
 import DeckDetailScreen from './components/DeckDetailScreen'
 import AddQuestionScreen from './components/AddQuestionScreen'
+import QuizScreen from './components/QuizScreen'
 import { Ionicons } from '@expo/vector-icons'
 
 const Tabs = TabNavigator({
@@ -54,6 +55,9 @@ const MainNavigator = StackNavigator({
   },
   AddCard: {
     screen: AddQuestionScreen
+  },
+  Quiz: {
+    screen: QuizScreen
   },
 })
 
