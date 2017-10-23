@@ -1,5 +1,6 @@
-export const asyncStore = "Decks2"
-export const asyncStore2 = "Params2"
+export const asyncStore = "Flashcards:decks"
+export const asyncStore2 = "Flashcards:params"
+export const asyncStore3 = "Flashcards:notification"
 
 export const palette = {
   primaryColorDark   : "#0097A7",

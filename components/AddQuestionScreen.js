@@ -17,17 +17,34 @@ class AddQuestionScreen extends React.Component {
     headerTintColor: palette.primaryColorDark,
   }
 
-  submitEntry (key, entry) {
+  submitEntry(key, entry) {
     return AsyncStorage.mergeItem(asyncStore, JSON.stringify({
       [key]: entry
     }))
   }
 
+  mergeQuestions(key) {
+    AsyncStorage.getItem(asyncStore, (err, result) => {
+      const decks = JSON.parse(result)
+      const deck = decks[key]
+      const cards = deck.questions
+      if (cards === undefined) {
+        const entry = { questions: [{ question: this.state.question, answer: this.state.answer}], title: key }
+        console.log(entry)
+        this.submitEntry(key, entry)
+
+      } else {
+        cards.push({ question: this.state.question, answer: this.state.answer})
+        const entry = { questions: cards, title: key }
+        console.log(entry)
+        this.submitEntry(key, entry)
+      }
+    });
+  }
+
   submit = () => {
     const key = this.state.title
-    const entry = { questions: [{ question: this.state.question, answer: this.state.answer}] }
-    this.setState({title: "", question: "", answer: ""})
-    this.submitEntry(key, entry)
+    this.mergeQuestions(key)
     AsyncStorage.mergeItem(asyncStore2, JSON.stringify({
       refreshHome: true
     }))

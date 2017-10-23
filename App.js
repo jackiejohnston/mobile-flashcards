@@ -3,6 +3,7 @@ import { Text, View, StatusBar, Platform } from 'react-native'
 import styled from 'styled-components/native'
 import { Constants } from 'expo'
 import { palette } from './utils/constants'
+import { setLocalNotification } from './utils/notification'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import HomeScreen from './components/HomeScreen'
 import AddDeckScreen from './components/AddDeckScreen'
@@ -62,6 +63,11 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>

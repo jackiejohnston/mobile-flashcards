@@ -44,10 +44,8 @@ class HomeScreen extends React.Component {
       ? console.log (err)
       : result === null
         ? AsyncStorage.setItem(asyncStore, JSON.stringify(this.state), () => {
-          // console.log("added state to async", JSON.stringify(this.state))
         })
         : this.setState(JSON.parse(result))
-          // console.log("set state", JSON.parse(result))
     })
   }
 
@@ -69,7 +67,6 @@ class HomeScreen extends React.Component {
 
   render() {
     this.checkForRefresh()
-    // console.log(this.state)
     const { navigate } = this.props.navigation
     return (
       <StyledScrollView>

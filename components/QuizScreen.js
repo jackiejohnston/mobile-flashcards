@@ -4,6 +4,7 @@ import { palette, asyncStore, asyncStore2 } from '../utils/constants'
 import styled from 'styled-components/native'
 import { NavigationActions } from 'react-navigation'
 import { AsyncStorage } from 'react-native'
+import { setLocalNotification, clearLocalNotification, getDailyReminderValue } from '../utils/notification'
 
 
 class QuizScreen extends React.Component {
@@ -62,6 +63,11 @@ class QuizScreen extends React.Component {
     this.getDeck()
   }
 
+  componentDidMount() {
+    clearLocalNotification()
+      .then(setLocalNotification)
+  }
+
   render() {
     const { title, cards, index, showQuestion, question, answer, correct } = this.state
     return (
@@ -80,7 +86,7 @@ class QuizScreen extends React.Component {
           { index === cards.length
             ? (
                 <StyledMdText>
-                  Score: { (correct/cards.length)*100 }%
+                  Score: { Math.round((correct/cards.length)*100) }%
                 </StyledMdText>
               )
             : showQuestion
