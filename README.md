@@ -19,7 +19,7 @@ Next, download, install and run this app in [Expo](https://expo.io):
 ```
 $  git clone git@github.com:jackiejohnston/mobile-flashcards.git
 $  cd mobile-flashcards
-$  yarn
+$  yarn install
 $  yarn start
 ```
 
