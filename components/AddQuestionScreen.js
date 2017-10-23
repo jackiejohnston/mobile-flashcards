@@ -30,13 +30,11 @@ class AddQuestionScreen extends React.Component {
       const cards = deck.questions
       if (cards === undefined) {
         const entry = { questions: [{ question: this.state.question, answer: this.state.answer}], title: key }
-        console.log(entry)
         this.submitEntry(key, entry)
 
       } else {
         cards.push({ question: this.state.question, answer: this.state.answer})
         const entry = { questions: cards, title: key }
-        console.log(entry)
         this.submitEntry(key, entry)
       }
     });
