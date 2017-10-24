@@ -33,9 +33,11 @@ class QuizScreen extends React.Component {
     this.setState({ correct: this.state.correct + 1 })
     this.setState({ index: this.state.index + 1 })
     if (newIndex != this.state.cards.length) {
-      this.setState({ question: cards[newIndex].question })
-      this.setState({ answer: cards[newIndex].answer })
-      this.setState({ showQuestion: true })
+      this.setState({
+        question: cards[newIndex].question,
+        answer: cards[newIndex].answer,
+        showQuestion: true
+      })
     }
   }
 
@@ -43,10 +45,22 @@ class QuizScreen extends React.Component {
     const newIndex = this.state.index + 1
     this.setState({ index: this.state.index + 1 })
     if (newIndex != this.state.cards.length) {
-      this.setState({ question: cards[newIndex].question })
-      this.setState({ answer: cards[newIndex].answer })
-      this.setState({ showQuestion: true })
+      this.setState({
+        question: cards[newIndex].question,
+        answer: cards[newIndex].answer,
+        showQuestion: true
+      })
     }
+  }
+
+  startOver = () => {
+    this.setState({
+      correct: 0,
+      index: 0,
+      showQuestion: true,
+      question: cards[0].question,
+      answer: cards[0].answer
+    })
   }
 
   getDeck() {
@@ -85,9 +99,19 @@ class QuizScreen extends React.Component {
         <View>
           { index === cards.length
             ? (
-                <StyledMdText>
-                  Score: { Math.round((correct/cards.length)*100) }%
-                </StyledMdText>
+                <View>
+                  <StyledMdText>
+                    Score: { Math.round((correct/cards.length)*100) }%
+                  </StyledMdText>
+                  <StyledTouchableHighlight onPress={this.startOver}>
+                    <StyledBtnText>Restart Quiz</StyledBtnText>
+                  </StyledTouchableHighlight>
+                  <StyledTouchableHighlight2 onPress={() => {
+                    this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'DeckDetail', params: { title: title, cards: cards }}))
+                  }}>
+                    <StyledBtnText>Return to Deck</StyledBtnText>
+                  </StyledTouchableHighlight2>
+                </View>
               )
             : showQuestion
               ? (

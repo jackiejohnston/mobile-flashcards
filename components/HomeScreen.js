@@ -9,8 +9,9 @@ import { NavigationActions } from 'react-navigation'
 class HomeScreen extends React.Component {
 
   static navigationOptions = {
-    title: 'Flashcards',
+    title: 'Decks',
     headerTintColor: palette.primaryColorDark,
+    headerLeft: null
   }
 
   state = {

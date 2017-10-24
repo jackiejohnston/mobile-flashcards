@@ -1,18 +1,51 @@
 import React from 'react'
 import { View, Text, TextInput, TouchableHighlight } from 'react-native'
-import { palette } from '../utils/constants'
+import { palette, asyncStore, asyncStore2 } from '../utils/constants'
 import styled from 'styled-components/native'
 import { NavigationActions } from 'react-navigation'
+import { AsyncStorage } from 'react-native'
 
 class DeckDetailScreen extends React.Component {
+
+  state = {
+    title: "",
+    cards: {}
+  }
 
   static navigationOptions = {
     title: 'Deck',
     headerTintColor: palette.primaryColorDark,
+    headerLeft: null
+  }
+
+  getDeck() {
+    AsyncStorage.getItem(asyncStore, (err, result) => {
+      const decks = JSON.parse(result)
+      const deck = decks[this.state.title]
+      this.setState({ cards: deck })
+    })
+  }
+
+  componentWillMount() {
+    this.setState({ title: this.props.navigation.state.params.title })
+    this.getDeck()
+  }
+
+  checkForRefresh() {
+    AsyncStorage.getItem(asyncStore2, (err, result) => {
+      err
+      ? console.log(err)
+      : result === null
+        ? console.log("Nothing in asyncStore2")
+        : JSON.parse(result).refreshDeck
+          ? this.getDeck()
+          : console.log("No refresh necessary")
+    })
   }
 
   render() {
-    const { title, cards } = this.props.navigation.state.params
+    this.checkForRefresh()
+    const { title, cards } = this.state
     return (
       <StyledView>
         <StyledMdText>{ title }</StyledMdText>
@@ -34,6 +67,11 @@ class DeckDetailScreen extends React.Component {
               </StyledTouchableHighlight2>
             : <Text></Text>
           }
+          <StyledTextLink onPress={() => {
+            this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'Home'}))
+          }}>
+            Decks
+          </StyledTextLink>
         </View>
       </StyledView>
     )
@@ -82,6 +120,12 @@ const StyledBtnText = styled.Text`
   font-size: 16px;
   color: ${palette.primaryColorText};
   font-weight: bold;
+`
+
+const StyledTextLink = styled.Text`
+  color: ${palette.primaryColorDark};
+  margin: 20px;
+  text-align: center;
 `
 
 export default DeckDetailScreen

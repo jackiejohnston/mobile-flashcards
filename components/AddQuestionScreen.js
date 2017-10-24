@@ -9,7 +9,8 @@ class AddQuestionScreen extends React.Component {
   state = {
     title: "",
     question: "",
-    answer: ""
+    answer: "",
+    cards: []
   }
 
   static navigationOptions = {
@@ -31,22 +32,22 @@ class AddQuestionScreen extends React.Component {
       if (cards === undefined) {
         const entry = { questions: [{ question: this.state.question, answer: this.state.answer}], title: key }
         this.submitEntry(key, entry)
+        this.setState({cards: [{ question: this.state.question, answer: this.state.answer}]})
 
       } else {
         cards.push({ question: this.state.question, answer: this.state.answer})
         const entry = { questions: cards, title: key }
         this.submitEntry(key, entry)
+        this.setState({cards: cards})
       }
-    });
+    })
   }
 
   submit = () => {
     const key = this.state.title
     this.mergeQuestions(key)
-    AsyncStorage.mergeItem(asyncStore2, JSON.stringify({
-      refreshHome: true
-    }))
-    this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'Home', params: { refresh: true }}))
+    AsyncStorage.mergeItem(asyncStore2, JSON.stringify({ refreshHome: true, refreshDeck: true }))
+    this.props.navigation.dispatch(NavigationActions.navigate({routeName: 'DeckDetail', params: { title: key, cards: this.state.cards }}))
   }
 
   componentWillMount() {
